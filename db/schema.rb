@@ -16,7 +16,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_26_180241) do
 
   create_table "links", force: :cascade do |t|
     t.string "title"
-    t.string "url"
+    t.string "url", default: "https://"
     t.text "description"
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
@@ -31,6 +31,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_26_180241) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email"
+    t.index ["login_token"], name: "index_users_on_login_token"
   end
 
   create_table "votes", force: :cascade do |t|

@@ -9,4 +9,5 @@ class CreateUsers < ActiveRecord::Migration[7.2]
     end
     add_index :users, :email
     add_index :users, :login_token
+  end
 end
