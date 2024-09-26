@@ -10,27 +10,9 @@
   </head>
 
   <body class="bg-gray-100">
-    <nav class="bg-indigo-600 text-white p-4">
-      <div class="container mx-auto flex justify-between items-center">
-        <%= link_to "Real Ancient History", root_path, class: "text-xl font-bold" %>
-        <div>
-          <% if logged_in? %>
-            <%= link_to "Submit Link", new_link_path, class: "text-white hover:text-indigo-200 mr-4" %>
-            <%= link_to "Log out", logout_path, data: { turbo_method: :delete }, class: "text-white hover:text-indigo-200" %>
-          <% else %>
-            <%= link_to "Log in", login_path, class: "text-white hover:text-indigo-200" %>
-          <% end %>
-        </div>
-      </div>
-    </nav>
-
+    <%= render "shared/nav" %>
     <main class="container mx-auto mt-8 px-4">
-      <% flash.each do |type, message| %>
-        <div class="<%= type == 'notice' ? 'bg-green-100 border-green-400 text-green-700' : 'bg-red-100 text-red-700' %> border px-4 py-3 rounded relative mb-4" role="alert">
-          <span class="block sm:inline"><%= message %></span>
-        </div>
-      <% end %>
-
+      <%= render "shared/flash" %>
       <%= yield %>
     </main>
   </body>

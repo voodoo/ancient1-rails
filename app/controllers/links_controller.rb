@@ -13,6 +13,10 @@ class LinksController < ApplicationController
     @link = Link.find(params[:id])
   end   
 
+  def best
+    @links = Link.best
+  end
+
   def create
     @link = current_user.links.build(link_params)
 

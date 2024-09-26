@@ -1,8 +1,8 @@
 <div id="link_<%= @link.id %>" class="p-4 bg-white shadow rounded-lg flex items-center">
   <div class="flex flex-col items-center mr-4">
-    <%= button_to '+', upvote_link_path(@link), method: :post, data: { turbo_stream: true }, class: "text-black text-lg" %>
+    <%= button_to '+', upvote_link_path(@link), method: :post, data: { turbo_stream: true }, class: "text-green-500 text-lg" if current_user && !current_user.voted_for?(@link) %>
     <p class="text-gray-700"><%= @link.score %></p>
-    <%= button_to '-', downvote_link_path(@link), method: :post, data: { turbo_stream: true }, class: "text-black text-lg" %>
+    <%= button_to '-', downvote_link_path(@link), method: :post, data: { turbo_stream: true }, class: "text-red-800 text-lg" if current_user && !current_user.voted_for?(@link) %>
   </div>
   <div>
     <h2 class="text-xl font-semibold"><%= link_to @link.title, @link.url, class: "text-black" %></h2>

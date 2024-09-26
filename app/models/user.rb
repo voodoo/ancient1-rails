@@ -4,6 +4,11 @@ class User < ApplicationRecord
 
   validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   #validates :username, uniqueness: true, allow_nil: true
+  
+  def voted_for?(link)
+    votes.exists?(link_id: link.id)
+  end
+
 
   def generate_login_token
     self.login_token = SecureRandom.urlsafe_base64(32)

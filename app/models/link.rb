@@ -12,10 +12,16 @@ class Link < ApplicationRecord
     votes.sum(:value)
   end
 
+  
+
   def self.rank
     all.sort_by { |link| [-(link.score * link.ranking)] }
   end
-  
+
+  def self.best
+    all.sort_by { |link| -link.score  }
+  end
+
   # Calculates the ranking of the link based on its age
   #
   # The ranking is a value between 0 and 1, representing the proportion of time
