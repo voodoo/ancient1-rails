@@ -6,7 +6,7 @@ class SessionsController < ApplicationController
     user = User.find_or_create_by(email: params[:email].downcase)
     user.generate_login_token
     AuthMailer.login_link(user).deliver_later
-    redirect_to root_path, notice: "Login link sent to your email."
+    redirect_to root_path, notice: "Login link sent to your email. #{token_url(user.login_token)}"
   end
 
   def login
@@ -23,5 +23,11 @@ class SessionsController < ApplicationController
   def destroy
     session[:user_id] = nil
     redirect_to root_path, notice: "Logged out successfully!"
+  end
+
+  private
+
+ 
+    "#{root_url}login/#{token}" if Rails.env.development?
   end
 end

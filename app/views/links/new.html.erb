@@ -1,0 +1,31 @@
+<h1 class="text-2xl font-bold mb-4">Submit a New Link</h1>
+
+<%= form_with(model: @link, local: true, class: "space-y-4") do |f| %>
+  <% if @link.errors.any? %>
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+      <h2><%= pluralize(@link.errors.count, "error") %> prohibited this link from being saved:</h2>
+      <ul>
+        <% @link.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= f.label :title, class: "block text-sm font-medium text-gray-700" %>
+    <%= f.text_field :title, required: true, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" %>
+  </div>
+
+  <div>
+    <%= f.label :url, class: "block text-sm font-medium text-gray-700" %>
+    <%= f.url_field :url, required: true, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" %>
+  </div>
+
+  <div>
+    <%= f.label :description, class: "block text-sm font-medium text-gray-700" %>
+    <%= f.text_area :description, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" %>
+  </div>
+
+  <%= f.submit "Submit Link", class: "inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
+<% end %>

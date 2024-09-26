@@ -4,9 +4,9 @@
     <title>Ancient</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
-    <%= stylesheet_link_tag "application", "inter-font", "data-turbo-track": "reload" %>
-    <%#= javascript_include_tag "application" %>
+    <%= turbo_include_tags %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
   </head>
 
   <body class="bg-gray-100">
@@ -15,7 +15,8 @@
         <%= link_to "HackerNews Clone", root_path, class: "text-xl font-bold" %>
         <div>
           <% if logged_in? %>
-            <%= link_to "Log out", logout_path, method: :delete, class: "text-white hover:text-indigo-200" %>
+            <%= link_to "Submit Link", new_link_path, class: "text-white hover:text-indigo-200 mr-4" %>
+            <%= link_to "Log out", logout_path, data: { turbo_method: :delete }, class: "text-white hover:text-indigo-200" %>
           <% else %>
             <%= link_to "Log in", login_path, class: "text-white hover:text-indigo-200" %>
           <% end %>

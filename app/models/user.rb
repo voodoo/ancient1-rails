@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  has_many :links, dependent: :destroy
+
   validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   #validates :username, uniqueness: true, allow_nil: true
 
