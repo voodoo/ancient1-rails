@@ -13,9 +13,8 @@
 </div>
 
 <div class="mt-8">
-  <h3 class="text-lg font-semibold mb-4">Comments</h3>
   
-  <%= render 'comments/form', link: @link, comment: Comment.new %>
+  <%= render 'comments/form', link: @link, comment: Comment.new if current_user %>
 
   <div id="comments" class="mt-4">
     <%= render partial: 'comments/comment', collection: @comments.order(created_at: :desc), as: :comment %>
