@@ -11,7 +11,8 @@ class LinksController < ApplicationController
   end
 
   def show
-    @comments = @link.comments.where(parent_id: nil)
+    @link = Link.find(params[:id])
+    @comments = @link.comments.where(parent_id: nil).includes(:user, :replies)
     @comment = Comment.new
   end   
 

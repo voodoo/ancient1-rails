@@ -1,7 +1,13 @@
-<%= turbo_stream.prepend "comments" do %>
-  <%= render partial: "comments/comment", locals: { comment: @comment } %>
+<% if @comment.parent_id %>
+  <%= turbo_stream.append dom_id(Comment.find(@comment.parent_id), "replies") do %>
+    <%= render 'comments/comment', comment: @comment %>
+  <% end %>
+<% else %>
+  <%= turbo_stream.prepend "comments" do %>
+    <%= render 'comments/comment', comment: @comment %>
+  <% end %>
 <% end %>
 
-<%= turbo_stream.replace "comment_form" do %>
-  <%= render partial: "comments/form", locals: { link: @link, comment: Comment.new } %>
+<%= turbo_stream.replace "new_comment" do %>
+  <%= turbo_frame_tag "new_comment" %>
 <% end %>

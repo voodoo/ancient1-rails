@@ -1,0 +1,5 @@
+<h2><%= @comment.parent_id ? 'Reply to Comment' : 'New Comment' %></h2>
+
+<%= render 'form', link: @link, comment: @comment %>
+
+<%= link_to 'Back to Link', link_path(@link) %>

@@ -1,0 +1,13 @@
+<%= turbo_stream.replace "new_comment" do %>
+  <%= turbo_frame_tag "new_comment" do %>
+    <%= render 'form', link: @link, comment: @comment %>
+  <% end %>
+<% end %>
+
+<!-- Debug output -->
+<%= turbo_stream.append_all "body" do %>
+  <script>
+    console.log("Turbo Stream response for new_comment");
+    console.log("Response HTML:", <%= raw(render('form', link: @link, comment: @comment).to_json) %>);
+  </script>
+<% end %>
