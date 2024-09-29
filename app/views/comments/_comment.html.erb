@@ -1,0 +1,16 @@
+<div id="<%= dom_id(comment) %>" class="mb-4">
+  <p><strong><%= comment.user.email %>:</strong> <%= comment.content %></p>
+  <div class="ml-4 mt-2">
+    <%= button_tag "Reply", type: "button", class: "text-sm text-blue-500", data: { action: "click->comment#showReplyForm", comment_id: comment.id } %>
+    
+    <div id="reply-form-<%= comment.id %>" class="hidden mt-2">
+      <%= render 'comments/form', link: comment.link, comment: Comment.new(parent_id: comment.id) %>
+    </div>
+
+    <div id="comment-<%= comment.id %>-replies">
+      <% comment.replies.each do |reply| %>
+        <%= render 'comments/comment', comment: reply %>
+      <% end %>
+    </div>
+  </div>
+</div>

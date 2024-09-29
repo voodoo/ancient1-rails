@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   root 'links#index'
   get 'links/best', to: 'links#best', as: :best_links
   resources :links do
-    
+    resources :comments, only: [:create, :destroy]
     member do
       post 'upvote'
       post 'downvote'

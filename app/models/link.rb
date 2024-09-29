@@ -1,7 +1,7 @@
 class Link < ApplicationRecord
   belongs_to :user
   has_many :votes, dependent: :destroy
-
+  has_many :comments, dependent: :destroy
   validates :title, presence: true, length: { maximum: 255 }
   validates :url, presence: true, url: true, uniqueness: { case_sensitive: false }
   validates :description, length: { maximum: 1000 }

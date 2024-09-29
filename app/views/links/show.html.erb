@@ -1,4 +1,4 @@
-<div id="link_<%= @link.id %>" class="p-4 bg-white shadow rounded-lg flex items-center">
+<div id="link_<%= @link.id %>" class="p-4 bg-white shadow rounded-lg flex items-center mb-4">
   <div class="flex flex-col items-center mr-4">
     <%= button_to '+', upvote_link_path(@link), method: :post, data: { turbo_stream: true }, class: "text-green-500 text-lg" if current_user && !current_user.voted_for?(@link) %>
     <p class="text-gray-700"><%= @link.score %></p>
@@ -10,5 +10,14 @@
     <p class="text-gray-500">Submitted by <%= @link.user.email %></p>
     <p class="text-gray-500">Ranking: <%= @link.ranking * @link.score %></p>
   </div>
+</div>
 
+<div class="mt-8">
+  <h3 class="text-lg font-semibold mb-4">Comments</h3>
+  
+  <%= render partial: 'comments/form', locals: { link: @link, parent_id: nil, comment: @comment } %>
+
+  <div id="comments" class="mt-4">
+    <%= render partial: 'comments/comment', collection: @comments %>
+  </div>
 </div>
