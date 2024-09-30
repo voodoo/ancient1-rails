@@ -1,8 +1,11 @@
 <div class="mb-4 bg-white rounded-lg shadow p-4" data-link-id="<%= comment.link_id %>">
   <div class="flex items-start space-x-3">
     <div class="flex-shrink-0">
-      <div class="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center">
-        <span class="text-gray-600 font-semibold"><%= comment.user.email[0].upcase %></span>
+      <div class="w-10 h-10 items-center justify-center">
+       <div class="text-gray-600 font-semibold flex flex-col">
+        <%= button_to '+', upvote_link_path(comment.link), method: :post, class: "text-green-500 text-lg" if current_user && !current_user.voted_for?(comment.link) %>
+        <%= button_to '-', downvote_link_path(comment.link), method: :post, class: "text-red-800 text-lg" if current_user && !current_user.voted_for?(comment.link) %>
+       </div>
       </div>
     </div>
     <div class="flex-grow">
