@@ -6,8 +6,8 @@ class User < ApplicationRecord
   validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   #validates :username, uniqueness: true, allow_nil: true
   
-  def voted_for?(link)
-    votes.exists?(link_id: link.id)
+  def voted_for?(votable)
+    votes.exists?(votable_id: votable.id, votable_type: votable.class.name)
   end
 
   def generate_login_token

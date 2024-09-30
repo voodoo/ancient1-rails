@@ -1,27 +1,33 @@
-<div class="mb-4 bg-white rounded-lg shadow p-4" data-link-id="<%= comment.link_id %>">
-  <div class="flex items-start space-x-3">
-    <div class="flex-shrink-0">
-      <div class="w-10 h-10 items-center justify-center">
-       <div class="text-gray-600 font-semibold flex flex-col">
-        <%= button_to '+', upvote_link_path(comment.link), method: :post, class: "text-green-500 text-lg" if current_user && !current_user.voted_for?(comment.link) %>
-        <%= button_to '-', downvote_link_path(comment.link), method: :post, class: "text-red-800 text-lg" if current_user && !current_user.voted_for?(comment.link) %>
-       </div>
+<%= turbo_frame_tag dom_id(comment) do %>
+  <div class="mb-4 bg-white rounded-lg shadow p-4" data-link-id="<%= comment.link_id %>">
+    <div class="flex items-start space-x-3">
+      <div class="flex-shrink-0">
+        <div class="w-10 h-10 items-center justify-center">
+          <div class="text-gray-600 font-semibold flex flex-col">
+            <%= button_to '+', upvote_link_comment_path(comment.link, comment), method: :post, class: "text-green-500 text-lg", form: { data: { turbo_frame: dom_id(comment) } } if current_user && !comment.votes.exists?(user: current_user) %>
+            <span id="<%= dom_id(comment, 'votes') %>"><%= comment.score %></span>
+            <%= button_to '-', downvote_link_comment_path(comment.link, comment), method: :post, class: "text-red-800 text-lg", form: { data: { turbo_frame: dom_id(comment) } } if current_user && !comment.votes.exists?(user: current_user) %>
+          </div>
+        </div>
+      </div>
+      <div class="flex-grow">
+        <p class="text-sm">
+          <span class="font-semibold text-gray-900"><%= comment.user.email %></span>
+          <span class="text-gray-600 ml-2"><%= time_ago_in_words(comment.created_at) %> ago</span>
+        </p>
+        <p class="mt-1 text-gray-800"><%= comment.content %></p>
+        <div class="mt-2">
+          <% if current_user %>
+            <%= link_to "Reply", reply_link_comment_path(comment.link, comment), 
+                class: "text-sm text-blue-600 hover:text-blue-800 transition duration-150 ease-in-out",
+                data: { turbo: false } %>
+          <% end %>
+        </div>
       </div>
     </div>
-    <div class="flex-grow">
-      <p class="text-sm">
-        <span class="font-semibold text-gray-900"><%= comment.user.email %></span>
-        <span class="text-gray-600 ml-2"><%= time_ago_in_words(comment.created_at) %> ago</span>
-      </p>
-      <p class="mt-1 text-gray-800"><%= comment.content %></p>
-      <div class="mt-2">
-        <%= link_to "Reply", reply_link_comment_path(comment.link, comment), 
-          class: "text-sm text-blue-600 hover:text-blue-800 transition duration-150 ease-in-out" if current_user %>
-      </div>
+    
+    <div id="<%= dom_id(comment, "replies") %>" class="mt-4 ml-8 space-y-4">
+      <%= render comment.replies %>
     </div>
   </div>
-  
-  <div id="<%= dom_id(comment, "replies") %>" class="mt-4 ml-8 space-y-4">
-    <%= render comment.replies %>
-  </div>
-</div>
+<% end %>

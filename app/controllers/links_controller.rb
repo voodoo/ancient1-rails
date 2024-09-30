@@ -1,9 +1,9 @@
 class LinksController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :create]
   before_action :set_link, only: [:show, :upvote, :downvote]
+  before_action :authenticate_user!, except: [:index, :show]
 
   def index
-    @links = Link.rank
+    @links = Link.all.includes(:user).sort_by(&:score).reverse
   end
 
   def new
@@ -11,7 +11,6 @@ class LinksController < ApplicationController
   end
 
   def show
-    @link = Link.find(params[:id])
     @comments = @link.comments.where(parent_id: nil).includes(:user, :replies)
     @comment = Comment.new
   end   
@@ -31,19 +30,13 @@ class LinksController < ApplicationController
   end
 
   def upvote
-    @link.votes.create(user: current_user, value: 1)
-    respond_to do |format|
-      format.html { redirect_to links_path }
-      format.turbo_stream
-    end
+    @link.upvote(current_user)
+    redirect_back fallback_location: root_path
   end
 
   def downvote
-    @link.votes.create(user: current_user, value: -1)
-    respond_to do |format|
-      format.html { redirect_to links_path }
-      format.turbo_stream
-    end
+    @link.downvote(current_user)
+    redirect_back fallback_location: root_path
   end
 
   private

@@ -1,7 +1,7 @@
 class CommentsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_link
-  before_action :set_comment, only: [:reply, :destroy]
+  before_action :set_link, only: [:upvote, :downvote, :reply, :create]
+  before_action :set_comment, only: [:reply, :destroy, :upvote, :downvote]
 
   def create
     @comment = @link.comments.build(comment_params)
@@ -20,7 +20,7 @@ class CommentsController < ApplicationController
   end
 
   def reply
-    @comment = Comment.new(parent_id: @parent_comment.id)
+    @comment = Comment.new(parent_id: @comment.id)
     render :new
   end
 
@@ -33,14 +33,32 @@ class CommentsController < ApplicationController
     end
   end
 
+  def upvote
+    @comment.upvote(current_user)
+    respond_to do |format|
+      format.html { redirect_back fallback_location: root_path, notice: 'Upvoted comment successfully.' }
+      format.json { render json: { score: @comment.score }, status: :ok }
+    end
+  end
+
+  def downvote
+    @comment.downvote(current_user)
+    respond_to do |format|
+      format.html { redirect_back fallback_location: root_path, notice: 'Downvoted comment successfully.' }
+      format.json { render json: { score: @comment.score }, status: :ok }
+    end
+  end
+
   private
 
   def set_link
+    logger.info("Link: #{@link.inspect}")
     @link = Link.find(params[:link_id])
   end
 
   def set_comment
-    @parent_comment = @link.comments.find(params[:id])
+    logger.info("Comment: #{@comment.inspect}")
+    @comment = @link.comments.find(params[:id])
   end
 
   def comment_params

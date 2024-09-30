@@ -10,13 +10,14 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="field bg-white p-4">
     <%= form.text_area :content, rows: 3,required: true, class: "w-full p-2 border rounded" %>
-  </div>
+
 
   <%= form.hidden_field :parent_id %>
 
   <div class="actions mt-2">
     <%= form.submit "Post Comment", class: "bg-blue-500 text-white px-4 py-2 rounded" %>
   </div>
+    </div>
 <% end %>

@@ -49,17 +49,18 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_29_153915) do
 
   create_table "votes", force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.bigint "link_id", null: false
-    t.integer "value"
+    t.string "votable_type", null: false
+    t.bigint "votable_id", null: false
+    t.integer "value", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["link_id"], name: "index_votes_on_link_id"
+    t.index ["user_id", "votable_id", "votable_type"], name: "index_votes_on_user_id_and_votable_id_and_votable_type", unique: true
     t.index ["user_id"], name: "index_votes_on_user_id"
+    t.index ["votable_type", "votable_id"], name: "index_votes_on_votable"
   end
 
   add_foreign_key "comments", "links"
   add_foreign_key "comments", "users"
   add_foreign_key "links", "users"
-  add_foreign_key "votes", "links"
   add_foreign_key "votes", "users"
 end
