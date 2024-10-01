@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
+  get "user/show"
   root 'links#index'
-  get 'links/best', to: 'links#best', as: :best_links
+  get 'users/settings', to: 'users#settings', as: :users_settings
+  resources :users, only: [:index, :show]
+  # get 'users/:id', to: 'users#show', as: :users
+  #get 'links/best', to: 'links#best', as: :best_links
   resources :links do
     member do
       post 'upvote'
