@@ -1,8 +1,8 @@
     <nav class="bg-indigo-900 text-white p-4">
-      <div class="container mx-auto flex justify-between items-center max-w-4xl">
+      <div class="container mx-auto flex justify-between items-center ">
         <%= link_to "Real Ancient History", root_path, class: "text-xl font-bold" %>
         <div class="flex items-center">
-          <%#= link_to "Best", best_links_path, class: "text-white hover:text-indigo-200 mr-4" %>
+          <%= link_to "Best", links_best_path, class: "text-white hover:text-indigo-200 mr-4" %>
           <% if logged_in? %>
             <%= link_to "Submit", new_link_path, class: "text-white hover:text-indigo-200 mr-4" %>
             <%= link_to users_settings_path, class: "text-white hover:text-indigo-200" do %>

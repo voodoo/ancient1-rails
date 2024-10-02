@@ -43,16 +43,16 @@ time_ago = [
 # Create links
 puts "Creating links..."
 links = [
-  { title: "The Great Pyramid of Giza", url: "https://en.wikipedia.org/wiki/Great_Pyramid_of_Giza" },
-  { title: "The Hanging Gardens of Babylon", url: "https://en.wikipedia.org/wiki/Hanging_Gardens_of_Babylon" },
-  { title: "The Colosseum", url: "https://en.wikipedia.org/wiki/Colosseum" },
-  { title: "Machu Picchu", url: "https://en.wikipedia.org/wiki/Machu_Picchu" },
-  { title: "The Great Wall of China", url: "https://en.wikipedia.org/wiki/Great_Wall_of_China" },
-  { title: "Petra", url: "https://en.wikipedia.org/wiki/Petra" },
-  { title: "The Parthenon", url: "https://en.wikipedia.org/wiki/Parthenon" },
-  { title: "Angkor Wat", url: "https://en.wikipedia.org/wiki/Angkor_Wat" },
-  { title: "Stonehenge", url: "https://en.wikipedia.org/wiki/Stonehenge" },
-  { title: "Easter Island", url: "https://en.wikipedia.org/wiki/Easter_Island" }
+  { title: "The Great Pyramid of Giza", url: "https://en.wikipedia.org/wiki/Great_Pyramid_of_Giza", description: "Ancient Egyptian wonder and the oldest of the Seven Wonders of the Ancient World." },
+  { title: "The Hanging Gardens of Babylon", url: "https://en.wikipedia.org/wiki/Hanging_Gardens_of_Babylon", description: "Legendary tiered gardens said to have been in ancient Mesopotamia." },
+  { title: "The Colosseum", url: "https://en.wikipedia.org/wiki/Colosseum", description: "Iconic amphitheater in Rome, symbol of the Roman Empire's power and engineering." },
+  { title: "Machu Picchu", url: "https://en.wikipedia.org/wiki/Machu_Picchu", description: "15th-century Inca citadel set high in the Andes Mountains of Peru." },
+  { title: "The Great Wall of China", url: "https://en.wikipedia.org/wiki/Great_Wall_of_China", description: "Series of fortifications spanning thousands of miles, built over centuries to protect Chinese states and empires." },
+  { title: "Petra", url: "https://en.wikipedia.org/wiki/Petra", description: "Ancient city carved into rose-colored rock faces in southern Jordan." },
+  { title: "The Parthenon", url: "https://en.wikipedia.org/wiki/Parthenon", description: "Former temple on the Athenian Acropolis, dedicated to the goddess Athena." },
+  { title: "Angkor Wat", url: "https://en.wikipedia.org/wiki/Angkor_Wat", description: "Massive temple complex in Cambodia, originally constructed as a Hindu temple dedicated to Vishnu." },
+  { title: "Stonehenge", url: "https://en.wikipedia.org/wiki/Stonehenge", description: "Prehistoric monument in Wiltshire, England, consisting of a ring of standing stones." },
+  { title: "Easter Island", url: "https://en.wikipedia.org/wiki/Easter_Island", description: "Remote Chilean island famous for its colossal stone statues called moai." }
 ]
 
 created_links = links.map { |link_data| Link.create!(link_data.merge(user: created_users.sample, created_at: time_ago.sample)) }

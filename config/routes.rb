@@ -4,8 +4,9 @@ Rails.application.routes.draw do
   get 'users/settings', to: 'users#settings', as: :users_settings
   resources :users, only: [:index, :show]
   # get 'users/:id', to: 'users#show', as: :users
-  #get 'links/best', to: 'links#best', as: :best_links
+  get 'links/best', to: 'links#best'
   resources :links do
+    get 'votes', to: 'links#votes', as: :votes
     member do
       post 'upvote'
       post 'downvote'

@@ -7,9 +7,14 @@ class Link < ApplicationRecord
   validates :url, presence: true, url: true, uniqueness: true
 
   def score
-    votes.sum(:value)
+    votes.sum(:value) 
   end
-
+  def vote_count
+    votes.count
+  end
+  def best
+    score * ranking
+  end
   def upvote(user)
     votes.create(user: user, value: 1)
   end
@@ -27,10 +32,10 @@ class Link < ApplicationRecord
   #
   # @return [Float] The ranking value, rounded to 4 decimal places
   def ranking
-    twenty_four_hours = 24 * 60 * 60
+    one_week = 7 * 24 * 60 * 60
     time_since_creation = Time.now.to_i - created_at.to_i
-    time_left = [twenty_four_hours - time_since_creation, 0].max
-    (time_left.to_f / twenty_four_hours).round(4)
+    time_left = [one_week - time_since_creation, 0].max
+    (time_left.to_f / one_week).round(2)
   end
 
 end

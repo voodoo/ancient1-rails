@@ -16,7 +16,7 @@ class LinksController < ApplicationController
   end   
 
   def best
-    @links = Link.best
+    @links = Link.all.includes(:user).sort_by(&:best).reverse
   end
 
   def create
@@ -27,6 +27,10 @@ class LinksController < ApplicationController
     else
       render :new
     end
+  end
+
+  def votes
+    @link = Link.find(params[:link_id])
   end
 
   def upvote

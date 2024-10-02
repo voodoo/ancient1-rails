@@ -1,0 +1,13 @@
+<h1 class="text-2xl font-bold">Votes</h1>
+
+    <p class="text-gray-500">Ranking: 
+    <%=  @link.score %> / 
+    <%= @link.ranking %> / 
+    <%= @link.vote_count %> votes /
+    <%= @link.score * @link.ranking %> 
+    <%= time_ago_in_words@link.created_at %> ago 
+    <div class="text-gray-500"  >
+      <% @link.votes.each do |vote| %>
+        <%= vote.value %>, by <%= vote.user.email %><br/>
+      <% end %> 
+    </div>
