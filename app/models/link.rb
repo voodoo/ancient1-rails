@@ -4,7 +4,7 @@ class Link < ApplicationRecord
   has_many :votes, as: :votable, dependent: :destroy
 
   validates :title, presence: true
-  validates :url, presence: true, url: true
+  validates :url, presence: true, url: true, uniqueness: true
 
   def score
     votes.sum(:value)
@@ -17,7 +17,7 @@ class Link < ApplicationRecord
   def downvote(user)
     votes.create(user: user, value: -1)
   end
-  
+
   # Calculates the ranking of the link based on its age
   #
   # The ranking is a value between 0 and 1, representing the proportion of time

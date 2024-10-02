@@ -17,9 +17,28 @@ User.destroy_all
 
 # Create the first user
 puts "Creating the first user..."
-first_user = User.create!(
-  email: 'user@example.com'
-)
+users = [
+    { email: 'user@ancient.com' },
+    { email: 'user2@ancient.com' },
+    { email: 'user3@ancient.com' },
+    { email: 'user4@ancient.com' },
+    { email: 'user5@ancient.com' },
+    { email: 'user6@ancient.com' },
+    { email: 'user7@ancient.com' },
+    { email: 'user8@ancient.com' },
+    { email: 'user9@ancient.com' },
+    { email: 'user10@ancient.com' },
+]
+created_users = users.map { |user| User.create!(email: user[:email]) }
+
+time_ago = [
+    2.hours.ago,
+    6.hours.ago,
+    24.hours.ago,
+    1.week.ago,
+    1.month.ago,
+    1.year.ago
+]
 
 # Create links
 puts "Creating links..."
@@ -36,7 +55,7 @@ links = [
   { title: "Easter Island", url: "https://en.wikipedia.org/wiki/Easter_Island" }
 ]
 
-created_links = links.map { |link_data| Link.create!(link_data.merge(user: first_user)) }
+created_links = links.map { |link_data| Link.create!(link_data.merge(user: created_users.sample, created_at: time_ago.sample)) }
 
 # Add comments to links
 puts "Adding comments..."
@@ -54,11 +73,12 @@ comments = [
 ]
 
 created_links.each do |link|
-  2.times do
+  5.times do
     Comment.create!(
       content: comments.sample,
       link: link,
-      user: first_user
+      user: created_users.sample,
+      created_at: time_ago.sample
     )
   end
 end
@@ -69,28 +89,28 @@ created_links.each do |link|
   Vote.create!(
     votable: link,
     value: [-1, 1].sample,
-    user: first_user
+    user: created_users.sample
   )
 
   link.comments.each do |comment|
     Vote.create!(
       votable: comment,
       value: [-1, 1].sample,
-      user: first_user
+      user: created_users.sample
     )
   end
 end
 
 # Create additional users and their votes
 5.times do |i|
-  user = User.create!(email: "user#{i+2}@example.com")
+  user = created_users.sample
   
   created_links.sample(5).each do |link|
     Vote.create!(
       votable: link,
       value: [-1, 1].sample,
       user: user
-    )
+    ) rescue nil
   end
 
   Link.all.sample(3).each do |link|
@@ -100,7 +120,7 @@ end
         votable: comment,
         value: [-1, 1].sample,
         user: user
-      )
+      ) rescue nil
     end
   end
 end

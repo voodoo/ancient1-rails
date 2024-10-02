@@ -2,12 +2,11 @@
   <div class="mb-4 bg-white rounded-lg shadow p-4" data-link-id="<%= comment.link_id %>">
     <div class="flex items-start space-x-3">
       <div class="flex-shrink-0">
-        <div class="w-10 h-10">
-          <div class="text-gray-600 font-semibold flex flex-col items-center justify-center">
+        <div class="w-10 h-10 flex flex-col items-center justify-center mt-6">
+
             <%= button_to '+', upvote_link_comment_path(comment.link, comment), method: :post, class: "text-green-500 text-lg", form: { data: { turbo_frame: dom_id(comment) } } if current_user && !comment.votes.exists?(user: current_user) %>
             <span id="<%= dom_id(comment, 'votes') %>"><%= comment.score %></span>
             <%= button_to '-', downvote_link_comment_path(comment.link, comment), method: :post, class: "text-red-800 text-lg", form: { data: { turbo_frame: dom_id(comment) } } if current_user && !comment.votes.exists?(user: current_user) %>
-          </div>
         </div>
       </div>
       <div class="flex-grow">

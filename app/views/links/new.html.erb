@@ -1,7 +1,7 @@
 <div class="mx-auto py-12 px-4 sm:px-6 lg:px-8">
   <h1 class="text-4xl font-extrabold text-gray-900 mb-10 text-center">Submit a New Link</h1>
 
-  <%= form_with(model: @link, local: true, class: "space-y-8") do |f| %>
+  <%= form_with(model: @link, class: "space-y-8", data: { turbo: false }) do |f| %>
     <% if @link.errors.any? %>
       <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-6 rounded-md" role="alert">
         <div class="flex items-center">

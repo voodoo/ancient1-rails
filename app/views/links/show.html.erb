@@ -8,7 +8,7 @@
     <h2 class="text-xl font-semibold"><%= link_to @link.title, @link.url, class: "text-black", target: "_blank" %></h2>
     <p class="text-gray-500"><%= @link.url %></p>
     <p class="text-gray-500">Submitted by <%= link_to @link.user.email, user_path(@link.user)  %></p>
-    <p class="text-gray-500">Ranking: <%=  @link.score %> / <%= @link.ranking %> / <%= @link.score * @link.ranking %></p>
+    <p class="text-gray-500">Ranking: <%=  @link.score %> / <%= @link.ranking %> / <%= @link.score * @link.ranking %> <%= time_ago_in_words@link.created_at %></p>
   </div>
 </div>
 
